@@ -101,7 +101,7 @@ namespace FlowCentric_Assessment.Controllers
                                 Quantity = order.SelectedProductQuantities[productId]
                             });
 
-                            TotalPrice += product.UnitPrice;
+                            TotalPrice += (product.UnitPrice * order.SelectedProductQuantities[productId]);
 
                         }
                     }
