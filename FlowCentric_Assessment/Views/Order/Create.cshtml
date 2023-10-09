@@ -1,0 +1,114 @@
+﻿@model FlowCentric_Assessment.Models.Order
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Place your order</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div class="form-group">
+                <label asp-for="OrderId" class="control-label"></label>
+                <input asp-for="OrderId" class="form-control" />
+                <span asp-validation-for="OrderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderDate" class="control-label"></label>
+                <input asp-for="OrderDate" class="form-control" />
+                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            @* <div class="form-group">
+                <label asp-for="SalesValueExcl" class="control-label"></label>
+                <input asp-for="SalesValueExcl" class="form-control" />
+                <span asp-validation-for="SalesValueExcl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppliedDiscount" class="control-label"></label>
+                <input asp-for="AppliedDiscount" class="form-control" />
+                <span asp-validation-for="AppliedDiscount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalesValueIncl" class="control-label"></label>
+                <input asp-for="SalesValueIncl" class="form-control" />
+                <span asp-validation-for="SalesValueIncl" class="text-danger"></span>
+            </div> *@
+            <h2>Select Items</h2>
+
+            @foreach (var product in Model.AvailableProducts)
+            {
+                <div class="product-container">
+                    <label class="product-name">
+                        <input type="checkbox" name="SelectedProductIds" value="@product.ProductId" /> @product.ProductName
+                    </label>
+                    <br />
+                    <span class="product-price">$@product.UnitPrice</span>
+                    <br />
+                    <label for="SelectedProductQuantities[@product.ProductId]">Quantity:</label>
+                    <input type="number" class="quantity-input" name="SelectedProductQuantities[@product.ProductId]" min="0" value="0" />
+                </div>
+            }
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Place Order" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@* <div>
+    <a asp-action="Index">Back to List</a>
+</div> *@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<style>
+    /* Style for the container div */
+    .product-container {
+        border: 1px solid #ccc;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px #aaa;
+        background-color: #f9f9f9;
+    }
+
+    /* Style for the product name */
+    .product-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* Style for the product price */
+    .product-price {
+        color: #007bff;
+        font-size: 16px;
+    }
+
+    /* Style for the quantity input */
+    .quantity-input {
+        width: 50px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        text-align: center;
+    }
+</style>

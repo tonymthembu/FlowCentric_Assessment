@@ -1,0 +1,80 @@
+﻿@model IEnumerable<FlowCentric_Assessment.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                    <button id="submitButton" class="btn btn-primary" data-id=@item.ProductId onclick="AddProduct(@item.ProductId)">Add Product</button>
+                    @Html.ActionLink("AddProduct", "AddProduct", new { id=item.ProductId }) |
+                @* @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ProductId }) *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        function AddProduct(id) {
+            var dataToSend = {
+                productId: id
+            };
+
+            // Send the POST request to the target controller's action
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AddProduct", "Order")",
+                data: dataToSend,
+                success: function () {
+                    // Handle success, e.g., redirect to a different view
+                    window.location.href = "@Url.Action("Index", "Order")";
+                },
+                error: function () {
+                    // Handle error
+                    alert("An error occurred while submitting the data.");
+                }
+            });
+        }
+        
+    </script>
+}
