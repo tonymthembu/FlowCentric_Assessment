@@ -46,7 +46,7 @@ namespace FlowCentric_Assessment.Controllers
 
                     if (users != null && users.Any())
                     {                        
-                        var firstUser = users.FirstOrDefault(u => u.UserName == model.Username && u.password == model.Password);
+                        var firstUser = users.LastOrDefault(u => u.UserName == model.Username && u.password == model.Password);
 
                         if (firstUser != null)
                         {
